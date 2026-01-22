@@ -28,7 +28,7 @@ class GameWorker:
       return None
     
     appid = int(match.group(1))
-    self.fetch_price(appid)
+    self.add_to_db(appid, name)
     
   def fetch_price(self, appid):
     url = f"https://store.steampowered.com/api/appdetails?appids={appid}"
@@ -43,8 +43,25 @@ class GameWorker:
     price = app_data["data"]["price_overview"]["final_formatted"]
     print(price)
   
-  def update_db(self):
-    return
+  def add_to_db(self, appid, name):
+    existing = (
+      self.session.query(App)
+      .filter_by(app_id=appid)
+      .first()
+    )
+    
+    if existing:
+      return
+    
+    game = App(
+      app_id=appid,
+      name=name
+    )
+    
+    self.session.add(game)
+    self.session.commit()
+    print("Game added to database")
+    self.fetch_price(appid)
   
   def check_alerts(self):
     return
