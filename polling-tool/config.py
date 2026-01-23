@@ -7,6 +7,6 @@ load_dotenv()
 
 DB_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 STEAM_API_KEY = os.getenv("STEAM_API_KEY")
-engine = create_engine(DB_URI, echo=True)
+engine = create_engine(DB_URI, echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()

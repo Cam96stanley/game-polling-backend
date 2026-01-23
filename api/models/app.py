@@ -18,5 +18,6 @@ class AppPrice(db.Model):
   __tablename__ = "app_price"
   
   app_id = db.Column(db.BigInteger, primary_key=True)
+  name = db.Column(db.String(255), nullable=False)
   price = db.Column(db.Integer, nullable=False)
   last_updated = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
